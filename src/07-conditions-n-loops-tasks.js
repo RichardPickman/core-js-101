@@ -181,8 +181,22 @@ function isInsideCircle(circle, point) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const map = new Map();
+
+  [...str].forEach((item) => {
+    if (map.has(item)) {
+      map.set(item, map.get(item) + 1);
+      return;
+    }
+
+    map.set(item, 1);
+  });
+
+  const findFirst = Array.from(map.values()).findIndex((item) => item === 1);
+  const findKey = Array.from(map.keys());
+
+  return findKey[findFirst];
 }
 
 
@@ -208,8 +222,31 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const setParenth = (n1, n2) => {
+    let res = '';
+    if (isStartIncluded) {
+      res += '[';
+    } else {
+      res += '(';
+    }
+
+    res += [n1, n2].join(', ');
+
+    if (isEndIncluded) {
+      res += ']';
+    } else {
+      res += ')';
+    }
+
+    return res;
+  };
+
+  if (a > b) {
+    return setParenth(b, a);
+  }
+
+  return setParenth(a, b);
 }
 
 
@@ -285,8 +322,10 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const res = [...num.toString()].reduce((a, n) => a + Number(n), 0);
+
+  return String(res).length > 1 ? getDigitalRoot(res) : res;
 }
 
 
@@ -411,48 +450,49 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(position) {
-  const winCombinations = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
+function evaluateTicTacToePosition(/* position */) {
+  throw new Error('Not implemented');
+  // const winCombinations = [
+  //   [0, 1, 2],
+  //   [3, 4, 5],
+  //   [6, 7, 8],
+  //   [0, 3, 6],
+  //   [1, 4, 7],
+  //   [2, 5, 8],
+  //   [0, 4, 8],
+  //   [2, 4, 6],
+  // ];
 
-  const x = [];
-  const o = [];
+  // const x = [];
+  // const o = [];
 
-  position.forEach((row) => {
-    const xArr = [];
-    const oArr = [];
-    row.forEach((turn, index) => {
-      if (turn === 'X') {
-        xArr.push(index);
-      } else if (turn === '0') {
-        oArr.push(index);
-      }
-    });
+  // position.forEach((row) => {
+  //   const xArr = [];
+  //   const oArr = [];
+  //   row.forEach((turn, index) => {
+  //     if (turn === 'X') {
+  //       xArr.push(index);
+  //     } else if (turn === '0') {
+  //       oArr.push(index);
+  //     }
+  //   });
 
-    x.push(xArr);
-    o.push(oArr);
-  });
+  //   x.push(xArr);
+  //   o.push(oArr);
+  // });
 
-  const xWon = winCombinations.some((comb) => comb.every((i) => x.includes(i)));
-  const oWon = winCombinations.some((comb) => comb.every((i) => o.includes(i)));
+  // const xWon = winCombinations.some((comb) => comb.every((i) => x.includes(i)));
+  // const oWon = winCombinations.some((comb) => comb.every((i) => o.includes(i)));
 
-  if (xWon) {
-    return 'X';
-  }
+  // if (xWon) {
+  //   return 'X';
+  // }
 
-  if (oWon) {
-    return '0';
-  }
+  // if (oWon) {
+  //   return '0';
+  // }
 
-  return undefined;
+  // return undefined;
 }
 
 
