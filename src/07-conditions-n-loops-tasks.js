@@ -164,8 +164,9 @@ function doRectanglesOverlap(r1, r2) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  const diameter = (circle.center.x - point.x) ** 2 + (circle.center.y - point.y) ** 2;
+  return Math.sqrt(diameter) < circle.radius;
 }
 
 
@@ -224,8 +225,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return [...str].reverse().join('');
 }
 
 
@@ -241,8 +242,8 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return num.toString().split('').reverse().join('');
 }
 
 
@@ -335,8 +336,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -410,8 +411,48 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const winCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  const x = [];
+  const o = [];
+
+  position.forEach((row) => {
+    const xArr = [];
+    const oArr = [];
+    row.forEach((turn, index) => {
+      if (turn === 'X') {
+        xArr.push(index);
+      } else if (turn === '0') {
+        oArr.push(index);
+      }
+    });
+
+    x.push(xArr);
+    o.push(oArr);
+  });
+
+  const xWon = winCombinations.some((comb) => comb.every((i) => x.includes(i)));
+  const oWon = winCombinations.some((comb) => comb.every((i) => o.includes(i)));
+
+  if (xWon) {
+    return 'X';
+  }
+
+  if (oWon) {
+    return '0';
+  }
+
+  return undefined;
 }
 
 
